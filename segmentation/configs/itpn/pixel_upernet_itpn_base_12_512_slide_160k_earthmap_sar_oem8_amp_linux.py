@@ -31,7 +31,7 @@ _oem8_ce_class_weight = [
 
 # iTPN-base 预训练（与 air_polarsar2_amp 系列一致）；本地无该路径时可改为 None 或用 --load-from
 model = dict(
-    pretrained='ckpts/itpn_base/checkpoint-1200.pth',
+    pretrained='weights/base/jiaquan_simple/checkpoint-1200.pth',
     backbone=dict(
         type='iTPN',
         img_size=512,
@@ -54,7 +54,7 @@ model = dict(
         in_channels=[384, 512, 768, 768],
         num_classes=8,
         channels=768,
-        norm_cfg=dict(type='SyncBN', requires_grad=True),
+        norm_cfg=dict(type='BN', requires_grad=True),
         loss_decode=dict(
             type='CrossEntropyLoss',
             use_sigmoid=False,
@@ -63,7 +63,7 @@ model = dict(
     auxiliary_head=dict(
         in_channels=768,
         num_classes=8,
-        norm_cfg=dict(type='SyncBN', requires_grad=True),
+        norm_cfg=dict(type='BN', requires_grad=True),
         loss_decode=dict(
             type='CrossEntropyLoss',
             use_sigmoid=False,
@@ -78,7 +78,7 @@ img_norm_cfg = dict(
     to_rgb=True)
 
 dataset_type = 'CustomDataset'
-data_root = r'data/earthmap'
+data_root = r'C:\Users\PC\Documents\Perceptica Files\SARATR-X-v2\data\earthmap'
 train_root = data_root + '/train'
 val_root = data_root + '/val'
 test_root = data_root + '/test'
@@ -188,7 +188,7 @@ lr_config = dict(
     _delete_=True,
     policy='poly',
     warmup='linear',
-    warmup_iters=3000,
+    warmup_iters=400,
     warmup_ratio=1e-5,
     power=0.9,
     min_lr=0.0,
@@ -211,7 +211,7 @@ optimizer_config = dict(
 eval_test = True
 evaluation = dict(
     _delete_=True,
-    interval=2000,
+    interval=1000000,
     metric=['mIoU'],
     eval_test=True,
     save_best='mIoU')
